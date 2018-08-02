@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from time import time
+
 from django.db import models
 from django.core.paginator import Paginator
 from django.utils.six import add_metaclass, iteritems
@@ -117,6 +119,7 @@ class DocType(DSLDocType):
     def __init__(self, related_instance_to_ignore=None, **kwargs):
         super(DocType, self).__init__(**kwargs)
         self._related_instance_to_ignore = related_instance_to_ignore
+        self._preptimes = []
 
     def __eq__(self, other):
         return id(self) == id(other)
@@ -209,7 +212,9 @@ class DocType(DSLDocType):
 
 
     def _prepare_action(self, object_instance, action):
-        return {
+        t0 = time()
+
+        ret = {
             '_op_type': action,
             '_index': str(self._doc_type.index),
             '_type': self._doc_type.mapping.doc_type,
@@ -218,6 +223,10 @@ class DocType(DSLDocType):
                 self.prepare(object_instance) if action != 'delete' else None
             ),
         }
+        t1 = time()
+        self._preptimes.append(t1-t0)
+        return ret
+
 
     def _get_actions(self, object_list, action):
         if self._doc_type.queryset_pagination is not None:
@@ -245,6 +254,8 @@ class DocType(DSLDocType):
         else:
             object_list = thing
 
-        return self.bulk(
+        ret= self.bulk(
             self._get_actions(object_list, action), **kwargs
         )
+        print(f"Sum of _preptimes: {sum(self._preptimes)}s")
+        return ret
