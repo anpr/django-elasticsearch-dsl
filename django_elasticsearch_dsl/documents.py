@@ -217,6 +217,7 @@ class DocType(DSLDocType):
 
     def _get_actions(self, object_list, action):
         if self._doc_type.queryset_pagination is not None:
+            print(' == paginator!')
             paginator = Paginator(
                 object_list, self._doc_type.queryset_pagination
             )
@@ -224,6 +225,7 @@ class DocType(DSLDocType):
                 for object_instance in paginator.page(page).object_list:
                     yield self._prepare_action(object_instance, action)
         else:
+            print(' == no paginator!')
             for object_instance in object_list:
                 yield self._prepare_action(object_instance, action)
 

@@ -89,7 +89,7 @@ class Command(BaseCommand):
             self.stdout.write("Indexing {} '{}' objects without refresh".format(
                 qs.count(), doc._doc_type.model.__name__)
             )
-            doc().update(qs.iterator(), refresh=False)
+            doc().update(qs, refresh=False)
 
     def _delete(self, models, options):
         index_names = [str(index) for index in registry.get_indices(models)]
