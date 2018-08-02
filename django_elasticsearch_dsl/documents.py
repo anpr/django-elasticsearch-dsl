@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from pprint import pprint
 from time import time
 
+from django.conf import settings
 from django.db import models
 from django.core.paginator import Paginator
 from django.utils.six import add_metaclass, iteritems
@@ -153,6 +154,7 @@ class DocType(DSLDocType):
             if not isinstance(field, DEDField):
                 continue
 
+            print(f"  -- {name}  {field}")
             if field._path == []:
                 field._path = [name]
 
@@ -229,6 +231,7 @@ class DocType(DSLDocType):
         """
         Update each document in ES for a model, iterable of models or queryset
         """
+        settings.DEBUG = True
         t0 = time()
         if refresh is True or (
             refresh is None and self._doc_type.auto_refresh
@@ -246,4 +249,5 @@ class DocType(DSLDocType):
         t1 = time()
         print(f" Sum of _preptimes: {sum(self._preptimes)}s")
         print(f" Total time: {t1-t0}s")
+        settings.DEBUG = True
         return ret
