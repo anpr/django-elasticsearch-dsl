@@ -44,19 +44,13 @@ class DEDField(Field):
         Given an model instance to index with ES, return the value that
         should be put into ES for this field.
         """
-        print("$$$$$ 4")
-        if hasattr(instance, 'created_by'):
-            print(type(instance))
-            # print(instance.created_by.username)
-        print("$$$$$ END 4")
-
         if not instance:
             return None
 
         for attr in self._path:
             print(f"   ## {attr}")
             if attr == 'created_by_username':
-                return instance.created_by.username ##
+                print(f"  TYPE: {type(instance)}")
             try:
                 instance = instance[attr]
             except (
