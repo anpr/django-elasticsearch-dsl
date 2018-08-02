@@ -227,6 +227,7 @@ class DocType(DSLDocType):
         """
         Update each document in ES for a model, iterable of models or queryset
         """
+        t0 = time()
         if refresh is True or (
             refresh is None and self._doc_type.auto_refresh
         ):
@@ -240,5 +241,7 @@ class DocType(DSLDocType):
         ret= self.bulk(
             self._get_actions(object_list, action), **kwargs
         )
-        print(f"Sum of _preptimes: {sum(self._preptimes)}s")
+        t1 = time()
+        print(f" Sum of _preptimes: {sum(self._preptimes)}s")
+        print(f" Total time: {t1-t0}s")
         return ret
