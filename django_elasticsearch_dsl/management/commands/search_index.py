@@ -86,10 +86,10 @@ class Command(BaseCommand):
     def _populate(self, models, options):
         for doc in registry.get_documents(models):
             qs = doc().get_queryset()
-            self.stdout.write("Indexing {} '{}' objects".format(
+            self.stdout.write("Indexing {} '{}' objects without refresh".format(
                 qs.count(), doc._doc_type.model.__name__)
             )
-            doc().update(qs)
+            doc().update(qs.iterator(), refresh=False)
 
     def _delete(self, models, options):
         index_names = [str(index) for index in registry.get_indices(models)]
