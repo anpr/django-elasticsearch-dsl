@@ -92,6 +92,7 @@ class ObjectField(DEDField, Object):
     def _get_inner_field_data(self, obj, field_value_to_ignore=None):
         data = {}
 
+        print(f"  _get_inner_field_data")
         if hasattr(self, 'properties'):
             for name, field in self.properties.to_dict().items():
                 if not isinstance(field, DEDField):
@@ -105,6 +106,7 @@ class ObjectField(DEDField, Object):
                 )
         else:
             for name, field in self._doc_class._doc_type.mapping.properties._params.get('properties', {}).items(): # noqa
+                print(f"  %% {name}  {field}")
                 if not isinstance(field, DEDField):
                     continue
 

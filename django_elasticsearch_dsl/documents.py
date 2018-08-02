@@ -154,7 +154,7 @@ class DocType(DSLDocType):
             if not isinstance(field, DEDField):
                 continue
 
-            print(f"  -- {name}  {field}")
+            print(f" ====== {name}  {field} =======")
             if field._path == []:
                 field._path = [name]
 
