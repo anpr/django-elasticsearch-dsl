@@ -153,7 +153,8 @@ class DocType(DSLDocType):
         for name, field in iteritems(self._doc_type._fields()):
             print("$$$$$ 2")
             print(instance.created_by.username)
-    
+            print("$$$$$ END 2")
+
             if not isinstance(field, DEDField):
                 continue
 
@@ -231,6 +232,7 @@ class DocType(DSLDocType):
             for object_instance in object_list:
                 print("$$$$$ 1")
                 print(object_instance.created_by.username)
+                print("$$$$$ END 1")
                 yield self._prepare_action(object_instance, action)
 
     def update(self, thing, refresh=None, action='index', **kwargs):

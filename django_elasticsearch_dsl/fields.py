@@ -45,7 +45,9 @@ class DEDField(Field):
         should be put into ES for this field.
         """
         print("$$$$$ 4")
-        print(instance.created_by.username)
+        if hasattr(instance, 'created_by'):
+            print(instance.created_by.username)
+        print("$$$$$ END 4")
 
         if not instance:
             return None
@@ -127,6 +129,7 @@ class ObjectField(DEDField, Object):
     def get_value_from_instance(self, instance, field_value_to_ignore=None):
         print("$$$$$ 3")
         print(instance.created_by.username)
+        print("$$$$$ END 3")
         objs = super(ObjectField, self).get_value_from_instance(
             instance, field_value_to_ignore
         )
