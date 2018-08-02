@@ -74,7 +74,9 @@ class DEDField(Field):
             if isinstance(instance, models.manager.Manager):
                 instance = instance.all()
             elif callable(instance):
+                print('  BEFORE callable')
                 instance = instance()
+                print('  AFTER callable')
             elif instance is None:
                 return None
 
