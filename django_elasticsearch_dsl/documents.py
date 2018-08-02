@@ -5,7 +5,7 @@ from time import time
 from django.db import models
 from django.core.paginator import Paginator
 from django.utils.six import add_metaclass, iteritems
-from elasticsearch.helpers import streaming_bulk
+from elasticsearch.helpers import bulk
 from elasticsearch_dsl import DocType as DSLDocType
 from elasticsearch_dsl.document import DocTypeMeta as DSLDocTypeMeta
 from elasticsearch_dsl.field import Field
@@ -191,24 +191,7 @@ class DocType(DSLDocType):
             )
 
     def bulk(self, actions, **kwargs):
-        # return bulk(client=self.connection, actions=actions, **kwargs)
-        success, failed = 0, 0
-
-        # list of errors to be collected is not stats_only
-        errors = []
-
-        # make streaming_bulk yield successful results so we can count them
-        kwargs['yield_ok'] = True
-        for ok, item in streaming_bulk(client=self.connection, actions=actions, **kwargs):
-            print(f" -- elasticsearch request returned ok={ok}")
-            # go through request-reponse pairs and detect failures
-            if not ok:
-                errors.append(item)
-                failed += 1
-            else:
-                success += 1
-
-        return success, failed
+        return bulk(client=self.connection, actions=actions, **kwargs)
 
 
     def _prepare_action(self, object_instance, action):
