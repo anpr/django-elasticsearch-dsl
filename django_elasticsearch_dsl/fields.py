@@ -48,6 +48,7 @@ class DEDField(Field):
             return None
 
         for attr in self._path:
+            print(f"   ## {attr}")
             try:
                 instance = instance[attr]
             except (
