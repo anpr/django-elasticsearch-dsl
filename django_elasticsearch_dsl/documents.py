@@ -227,6 +227,8 @@ class DocType(DSLDocType):
         else:
             print(' == no paginator!')
             for object_instance in object_list:
+                print("$$$$$")
+                print(object_instance.created_by.username)
                 yield self._prepare_action(object_instance, action)
 
     def update(self, thing, refresh=None, action='index', **kwargs):
