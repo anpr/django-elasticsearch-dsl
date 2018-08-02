@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from pprint import pprint
 from time import time
 
 from django.db import models
@@ -172,6 +173,7 @@ class DocType(DSLDocType):
 
             data[name] = field_value
 
+        pprint(data)
         return data
 
     @classmethod
