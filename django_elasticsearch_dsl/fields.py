@@ -49,6 +49,8 @@ class DEDField(Field):
 
         for attr in self._path:
             print(f"   ## {attr}")
+            if attr == 'created_by_username':
+                return instance.created_by.username ##
             try:
                 instance = instance[attr]
             except (
@@ -93,8 +95,6 @@ class DEDField(Field):
 class ObjectField(DEDField, Object):
     def _get_inner_field_data(self, obj, field_value_to_ignore=None):
         data = {}
-
-        print(f"  _get_inner_field_data")
         if hasattr(self, 'properties'):
             for name, field in self.properties.to_dict().items():
                 if not isinstance(field, DEDField):
