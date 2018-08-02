@@ -44,6 +44,9 @@ class DEDField(Field):
         Given an model instance to index with ES, return the value that
         should be put into ES for this field.
         """
+        print("$$$$$ 4")
+        print(instance.created_by.username)
+
         if not instance:
             return None
 
@@ -122,6 +125,8 @@ class ObjectField(DEDField, Object):
         return data
 
     def get_value_from_instance(self, instance, field_value_to_ignore=None):
+        print("$$$$$ 3")
+        print(instance.created_by.username)
         objs = super(ObjectField, self).get_value_from_instance(
             instance, field_value_to_ignore
         )

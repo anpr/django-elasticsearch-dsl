@@ -151,6 +151,9 @@ class DocType(DSLDocType):
         """
         data = {}
         for name, field in iteritems(self._doc_type._fields()):
+            print("$$$$$ 2")
+            print(instance.created_by.username)
+    
             if not isinstance(field, DEDField):
                 continue
 
@@ -175,7 +178,6 @@ class DocType(DSLDocType):
 
             data[name] = field_value
 
-        pprint(data)
         return data
 
     @classmethod
@@ -227,7 +229,7 @@ class DocType(DSLDocType):
         else:
             print(' == no paginator!')
             for object_instance in object_list:
-                print("$$$$$")
+                print("$$$$$ 1")
                 print(object_instance.created_by.username)
                 yield self._prepare_action(object_instance, action)
 
